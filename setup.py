@@ -6,15 +6,16 @@ with open('README.rst') as readme_file:
 
 
 setup(
-    name='big_O',
+    name='BigO',
     version='0.11.0',
-    description='Empirical estimation of time complexity from execution time',
-    author='Pietro Berkes',
-    author_email='pietro.berkes@googlemail.com',
-    url='https://github.com/pberkes/big_O',
+    description='Empirical estimation of time complexity from execution time. Extended and actively maintained fork of big_O (Python complexity analysis)',
+    author='Tiago Fonseca',
+    author_email='t.fonseca@ua.pt',
+    url='https://github.com/tiagosf13/BigO',
     license='LICENSE.txt',
+    notice='NOTICE.md',
     long_description=long_description,
     long_description_content_type='text/x-rst',
     packages=['big_o', 'big_o.test'],
-    install_requires=['numpy']
+    install_requires=['numpy', 'pydantic', 'typing', 'random', 'exectimeit', 'ast']
 )

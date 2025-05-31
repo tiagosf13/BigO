@@ -1,4 +1,4 @@
-from big_o.complexities import ComplexityClass
+from complexities import ComplexityClass
 
 
 def big_o_report(best, others):

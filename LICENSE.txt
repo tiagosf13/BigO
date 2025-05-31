@@ -1,3 +1,6 @@
+This is a fork of the BigO library by Pietro Berkes.
+Modifications and enhancements © 2025 Tiago Fonseca (https://github.com/tiagosf13).
+
 Copyright (c) 2011-2018, big_O developers
 All rights reserved.
 

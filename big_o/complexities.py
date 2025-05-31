@@ -41,20 +41,24 @@ class ComplexityClass(object):
         """
         n = np.asanyarray(n)
         t = np.asanyarray(t)
+        #t = np.nan_to_num(t, nan=np.inf)
 
         x = self._transform_n(n)
         y = self._transform_time(t)
-        coeff, residuals, rank, s = np.linalg.lstsq(x, y, rcond=-1)
+        coeff, residuals , _, _ = np.linalg.lstsq(x, y, rcond=-1)
         self.coeff = coeff
-
-        # Check if residuals from least square can be used, or if it
-        # must be explicitly calculated.
+        
         if self._recalculate_fit_residuals:
             ref_t = self.compute(n)
-            residuals = np.sum((ref_t - t) ** 2)
+            # SMAPE 0 to 1 https://en.wikipedia.org/wiki/Symmetric_mean_absolute_percentage_error
+            #residuals = np.mean(np.abs(ref_t - t) / ((np.abs(ref_t) + np.abs(t)) / 2))
+            residuals = np.sqrt(np.sum(np.square(ref_t - t)))
+            # if np.isnan(residuals):
+            #     residuals = np.inf
         else:
             residuals = residuals[0]
         return residuals
+
 
     def compute(self, n):
         """ Compute the value of the fitted function at `n`. """
@@ -184,6 +188,8 @@ class Logarithmic(ComplexityClass):
     def _transform_n(self, n):
         return np.vstack([np.ones(len(n)), np.log(n)]).T
 
+
+
     @classmethod
     def format_str(cls):
         return 'time = {:.2G} + {:.2G}*log(n)'
@@ -208,8 +214,12 @@ class Polynomial(ComplexityClass):
     def _transform_n(self, n):
         return np.vstack([np.ones(len(n)), np.log(n)]).T
 
-    def _transform_time(self, t):
-        return np.log(t)
+    def _transform_time(self, t: np.ndarray) -> np.ndarray:
+        t = np.asarray(t)  # Ensure it's a NumPy array
+        t[t <= 0] = np.nan  # Replace non-positive values with NaN
+        result = np.log(t)
+        result = np.nan_to_num(result, nan=0.0)  # Replace NaNs with 0
+        return result
 
     def _inverse_transform_time(self, t):
         return np.exp(t)
@@ -240,8 +250,12 @@ class Exponential(ComplexityClass):
     def _transform_n(self, n):
         return np.vstack([np.ones(len(n)), n]).T
 
-    def _transform_time(self, t):
-        return np.log(t)
+    def _transform_time(self, t: np.ndarray) -> np.ndarray:
+        t = np.asarray(t)  # Ensure it's a NumPy array
+        t[t <= 0] = np.nan  # Replace non-positive values with NaN
+        result = np.log(t)
+        result = np.nan_to_num(result, nan=0.0)  # Replace NaNs with 0
+        return result
 
     def _inverse_transform_time(self, t):
         return np.exp(t)

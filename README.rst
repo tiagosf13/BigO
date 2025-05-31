@@ -1,3 +1,14 @@
+===========================
+BigO (Extended & Maintained)
+===========================
+
+**This is an actively developed fork of the original** `BigO <https://github.com/pberkes/big_O>`_ **by Pietro Berkes.**  
+**Maintained by:** `Tiago Fonseca <https://github.com/tiagosf13>`_
+
+This fork includes enhancements, new features, and active maintenance.
+
+----
+
 =====
 big_O
 =====
@@ -176,3 +187,11 @@ License
 big_O is released under BSD-3. See LICENSE.txt .
 
 Copyright (c) 2011-2018, Pietro Berkes. All rights reserved.
+
+
+Credits
+-------
+
+This project is based on the original work by Pietro Berkes (https://github.com/pberkes/big_O).
+
+All modifications, enhancements, and ongoing development from 2025 onward are by Tiago Fonseca.
